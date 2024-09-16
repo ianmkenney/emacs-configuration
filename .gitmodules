@@ -7,3 +7,6 @@
 [submodule "packages/eglot"]
 	path = packages/eglot
 	url = https://github.com/joaotavora/eglot
+[submodule "packages/ledger-mode"]
+	path = packages/ledger-mode
+	url = https://github.com/ledger/ledger-mode

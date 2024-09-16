@@ -64,6 +64,11 @@
 
 (helm-mode 1)
 
+;; ledger mode
+
+(add-to-list 'load-path (locate-user-emacs-file "packages/ledger-mode"))
+(require `ledger-mode)
+
 ;; ORG
 (setq
       org-directory "~/org"
