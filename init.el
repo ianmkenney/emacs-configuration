@@ -9,69 +9,46 @@
 
 (make-directory (locate-user-emacs-file "autosaves/") t)
 
-(setq-default explicit-shell-file-name "/bin/zsh -i")
+;;(setq-default explicit-shell-file-name "/bin/zsh -i")
 
 ;; use environment variables from my shell
-(when (memq window-system '(mac ns x))
-  (exec-path-from-shell-initialize))
+;;(when (memq window-system '(mac ns x))
+;;  (exec-path-from-shell-initialize))
 
-;; eglot
+;; PACKAGES
 
-(add-to-list 'load-path (locate-user-emacs-file "packages/eglot"))
-(require 'eglot)
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 
-;; Company mode
-
-(add-to-list 'load-path (locate-user-emacs-file "packages/company-mode"))
-(require 'company)
-
-(global-company-mode t)
-
-;; Helm
-
-(add-to-list 'load-path (locate-user-emacs-file "packages/helm"))
-(require 'helm)
-(require 'helm-autoloads)
-
-(global-set-key (kbd "C-c h") 'helm-command-prefix)
-(global-unset-key (kbd "C-x c"))
-
-(define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to run persistent action
-(define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB work in terminal
-(define-key helm-map (kbd "C-z")  'helm-select-action) ; list actions using C-z
-
-(when (executable-find "curl")
-  (setq helm-google-suggest-use-curl-p t))
-
-(setq helm-split-window-in-side-p           t ; open helm buffer inside current window, not occupy whole other window
-      helm-move-to-line-cycle-in-source     t ; move to end or beginning of source when reaching top or bottom of source.
-      helm-ff-search-library-in-sexp        t ; search for library in `require' and `declare-function' sexp.
-      helm-scroll-amount                    8 ; scroll 8 lines other window using M-<next>/M-<prior>
-      helm-ff-file-name-history-use-recentf t
-      helm-echo-input-in-header-line t)
-
-
-(setq helm-autoresize-max-height 0)
-(setq helm-autoresize-min-height 20)
-(helm-autoresize-mode 1)
-
-(setq helm-mode-fuzzy-match t)
-
-(global-set-key (kbd "M-x") 'helm-M-x)  ;; Use Helm for M-x
-(global-set-key (kbd "C-x C-f") 'helm-find-files)  ;; Use Helm for find files
-(global-set-key (kbd "C-x b") 'helm-buffers-list)  ;; Use Helm for buffer list
-(global-set-key (kbd "C-x C-r") 'helm-recentf)  ;; Use Helm for recent files
-
-(helm-mode 1)
-
-;; ledger mode
-
-(add-to-list 'load-path (locate-user-emacs-file "packages/ledger-mode"))
-(require `ledger-mode)
+(use-package elfeed
+  :ensure t)
+(use-package company
+  :config
+  (global-company-mode t)
+  :ensure t)
+(use-package ledger-mode
+  :ensure t)
+(use-package eglot
+  :ensure t)
+(use-package git-gutter
+  :config
+  (global-git-gutter-mode t)
+  (global-git-gutter-mode +1)
+  (global-set-key (kbd "M-g p") 'git-gutter:previous-hunk)
+  (global-set-key (kbd "M-g n") 'git-gutter:next-hunk)
+  :ensure t)
+(use-package magit
+  :ensure t)
+(use-package ivy
+  :config
+  (ivy-mode t)
+  (setq ivy-use-virtual-buffers t
+	ivy-count-format "%d/%d")
+  :ensure t)
 
 ;; ORG
-(setq
-      org-directory "~/org"
+(setq org-directory "~/org"
+      org-startup-indented t
       org-agenda-files '("~/org")
       org-default-notes-file (concat org-directory "/inbox.org")
       org-agenda-use-time-grid t
@@ -145,7 +122,7 @@
 (setq display-line-numbers-type 'relative)
 (global-display-line-numbers-mode)
 
-(load-theme 'modus-operandi t)
+(load-theme 'leuven)
 
 ;; Generated files
 (auto-save-mode -1)
@@ -161,16 +138,3 @@
 (global-auto-revert-mode 1)
 
 (setq global-auto-revert-non-file-buffers t)
-
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-
-;; Pressing C-n at end of buffer adds new line
-(setq next-line-add-newlines t)
-
-;; git-gutter
-
-(require 'git-gutter)
-
-(global-git-gutter-mode +1)
-(global-set-key (kbd "M-g p") 'git-gutter:previous-hunk)
-(global-set-key (kbd "M-g n") 'git-gutter:next-hunk)
