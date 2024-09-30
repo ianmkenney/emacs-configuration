@@ -4,16 +4,10 @@
 ;; auto save and backkups
 
 (custom-set-variables
- '(auto-save-file-name-transforms '((".*" "~/.emacs.d/autosaves/\\1" t)))
+ '(auto-save-file-name-transforms `((".*"  ,(locate-user-emacs-file "autosaves/") t)))
  '(backup-directory-alist '((".*" . (locate-user-emacs-file "backups/")))))
 
 (make-directory (locate-user-emacs-file "autosaves/") t)
-
-;;(setq-default explicit-shell-file-name "/bin/zsh -i")
-
-;; use environment variables from my shell
-;;(when (memq window-system '(mac ns x))
-;;  (exec-path-from-shell-initialize))
 
 ;; PACKAGES
 
