@@ -1,3 +1,6 @@
+(setq initial-frame-alist
+      '((width . 100) (height . 45)))
+
 (setq custom-file (locate-user-emacs-file "custom-vars.el"))
 (load custom-file 'noerror 'nomessage)
 
@@ -9,21 +12,26 @@
 
 (make-directory (locate-user-emacs-file "autosaves/") t)
 
+(add-to-list 'exec-path "~/local/bin")
+
 ;; PACKAGES
 
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 
 (use-package elfeed
-  :ensure t)
+  :ensure t
+  :defer)
 (use-package company
   :config
   (global-company-mode t)
   :ensure t)
 (use-package ledger-mode
-  :ensure t)
+  :ensure t
+  :defer)
 (use-package eglot
-  :ensure t)
+  :ensure t
+  :defer)
 (use-package git-gutter
   :config
   (global-git-gutter-mode t)
@@ -32,24 +40,41 @@
   (global-set-key (kbd "M-g n") 'git-gutter:next-hunk)
   :ensure t)
 (use-package magit
-  :ensure t)
+  :ensure t
+  :defer)
 (use-package ivy
   :config
   (ivy-mode t)
   (setq ivy-use-virtual-buffers t
 	ivy-count-format "%d/%d")
   :ensure t)
+(use-package color-theme-sanityinc-solarized
+  :ensure t)
+
+(use-package htmlize
+  :ensure t
+  :defer)
+
+(use-package ansi-color
+  :hook (compilation-filter . ansi-color-compilation-filter))
 
 ;; ORG
 (setq org-directory "~/org"
       org-startup-indented t
+      org-startup-folded t
+      org-log-into-drawer t
+      org-log-done 'time
+      org-log-redeadline 'time
+      org-log-reschedule 'time
       org-agenda-files '("~/org")
+      org-agenda-files (directory-files-recursively "~/org" "\\.org$")
       org-default-notes-file (concat org-directory "/inbox.org")
       org-agenda-use-time-grid t
       org-refile-targets '((org-agenda-files :maxlevel . 5))
       org-refile-use-outline-path 'file
-      org-todo-keywords '((sequence "TODO" "IN-PROGRESS" "FEEDBACK" "|" "DONE" "DELEGATED"
-			  ))
+      org-outline-path-complete-in-steps nil
+      org-todo-keywords '((sequence "TODO" "ACTIVE" "|" "DONE"))
+      org-refile-allow-creating-parent-nodes 'confirm
 )
 
 ;;;; CUSTOM AGENDA
@@ -116,7 +141,7 @@
 (setq display-line-numbers-type 'relative)
 (global-display-line-numbers-mode)
 
-(load-theme 'leuven)
+(load-theme 'sanityinc-solarized-light)
 
 ;; Generated files
 (auto-save-mode -1)
@@ -132,3 +157,16 @@
 (global-auto-revert-mode 1)
 
 (setq global-auto-revert-non-file-buffers t)
+
+(with-eval-after-load 'ox-latex
+(add-to-list 'org-latex-classes
+             '("org-plain-latex"
+               "\\documentclass{article}
+           [NO-DEFAULT-PACKAGES]
+           [PACKAGES]
+           [EXTRA]"
+               ("\\section{%s}" . "\\section*{%s}")
+               ("\\subsection{%s}" . "\\subsection*{%s}")
+               ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+               ("\\paragraph{%s}" . "\\paragraph*{%s}")
+               ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
