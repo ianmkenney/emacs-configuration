@@ -9,36 +9,42 @@
 
 (make-directory (locate-user-emacs-file "autosaves/") t)
 
+(add-to-list 'exec-path "~/.local/bin/")
+(add-to-list 'exec-path "~/local/bin/")
+
 ;; PACKAGES
+
+(setq use-package-always-ensure t)
 
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 
-(use-package elfeed
-  :ensure t)
+(use-package elfeed)
+
 (use-package company
   :config
-  (global-company-mode t)
-  :ensure t)
-(use-package ledger-mode
-  :ensure t)
-(use-package eglot
-  :ensure t)
+  (global-company-mode t))
+
+(use-package ledger-mode)
+
+(use-package eglot)
+
 (use-package git-gutter
   :config
   (global-git-gutter-mode t)
   (global-git-gutter-mode +1)
   (global-set-key (kbd "M-g p") 'git-gutter:previous-hunk)
-  (global-set-key (kbd "M-g n") 'git-gutter:next-hunk)
-  :ensure t)
-(use-package magit
-  :ensure t)
+  (global-set-key (kbd "M-g n") 'git-gutter:next-hunk))
+
+(use-package magit)
+
 (use-package ivy
   :config
   (ivy-mode t)
   (setq ivy-use-virtual-buffers t
-	ivy-count-format "%d/%d")
-  :ensure t)
+	ivy-count-format "%d/%d"))
+
+(use-package gruber-darker-theme)
 
 ;; ORG
 (setq org-directory "~/org"
@@ -116,7 +122,7 @@
 (setq display-line-numbers-type 'relative)
 (global-display-line-numbers-mode)
 
-(load-theme 'leuven)
+(load-theme 'gruber-darker)
 
 ;; Generated files
 (auto-save-mode -1)
