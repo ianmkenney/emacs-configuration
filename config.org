@@ -153,8 +153,6 @@
   (setq inhibit-startup-message t)
   (setq ring-bell-function 'ignore)
 
-  (menu-bar-mode t) ;; this isn't actually quite so annoying on a mac...
-
   (pcase system-type
         ('darwin (menu-bar-mode t)) ;; I only want a menu bar if it's a mac
         (t (menu-bar-mode -1)))
