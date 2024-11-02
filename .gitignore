@@ -13,3 +13,8 @@ smex-items
 tramp
 transient/
 url/
+/.lsp-session-v1
+/autosaves/
+/projects
+/.org-id-locations
+/tree-sitter/
