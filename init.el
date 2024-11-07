@@ -42,7 +42,7 @@
   (setq ivy-use-virtual-buffers t
 	ivy-count-format "%d/%d")
   :ensure t)
-(use-package color-theme-sanityinc-solarized
+(use-package gruvbox
   :ensure t)
 
 (use-package htmlize
@@ -52,29 +52,29 @@
 (use-package ansi-color
   :hook (compilation-filter . ansi-color-compilation-filter))
 
-(setq org-directory "~/org"
-      org-startup-indented t
-      org-startup-folded t
-      org-log-into-drawer t
-      org-log-done 'time
-      org-log-redeadline 'time
-      org-log-reschedule 'time
-      org-agenda-files '("~/org")
-      org-agenda-files (directory-files-recursively "~/org" "\\.org$")
-      org-default-notes-file (concat org-directory "/inbox.org")
-      org-agenda-use-time-grid t
+(setq project-switch-commands '((project-find-file "Find file" "f")
+                                (project-find-dir "Find dir" "d")
+                                (project-dired "Dired" "D")
+				;; (consult-ripgrep "ripgrep" "g")
+                                (magit-project-status "Magit" "m"))
+      )
+
+(setq org-directory "~/org")
+
+(setq org-todo-keywords '((sequence "TODO(t)" "ACTIVE(a)" "|" "DONE(d)" "CANCELED(c)" "DELIGATED(D)"))
+      )
+
+(setq org-default-notes-file (concat org-directory "/inbox.org"))
+
+(setq org-refile-allow-creating-parent-nodes t
       org-refile-targets '((org-agenda-files :maxlevel . 5))
       org-refile-use-outline-path 'file
       org-outline-path-complete-in-steps nil
-      org-todo-keywords '((sequence "TODO(t)" "ACTIVE(a)" "|" "DONE(d)" "CANCELED(c)" "DELIGATED(D)"))
-      org-refile-allow-creating-parent-nodes t
-      org-archive-subtree-add-inherited-tags t
-      project-switch-commands '((project-find-file "Find file" "f")
-                                (project-find-dir "Find dir" "d")
-                                (project-dired "Dired" "D")
-;;                                (consult-ripgrep "ripgrep" "g")
-                                (magit-project-status "Magit" "m"))
-)
+      )
+
+(setq org-agenda-use-time-grid t)
+
+(setq org-agenda-files (directory-files-recursively org-directory "\\.org$"))
 
 (defun my-skip-daily ()
   (let ((subtree-end (save-excursion (org-end-of-subtree t))))
@@ -123,10 +123,25 @@
 		   (org-agenda-overriding-header "Today's Tasks")
 		   ))))))
 
+(require 'org-tempo)
+
+(setq org-startup-indented t
+      org-startup-folded t
+      )
+
+(setq org-hide-emphasis-markers t)
+
+(use-package org-bullets
+  :ensure
+  :config
+  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+
+(font-lock-add-keywords 'org-mode
+                        '(("^ *\\([-]\\) "
+                           (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+
 (setq inhibit-startup-message t)
 (setq ring-bell-function 'ignore)
-
-(menu-bar-mode t) ;; this isn't actually quite so annoying on a mac...
 
 (pcase system-type
       ('darwin (menu-bar-mode t)) ;; I only want a menu bar if it's a mac
@@ -138,7 +153,7 @@
 (setq display-line-numbers-type 'relative)
 (global-display-line-numbers-mode)
 
-(load-theme 'sanityinc-tomorrow-day :no-confirm)
+(load-theme 'gruvbox-light-hard :no-confirm)
 
 (setq initial-frame-alist
       '((width . 100) (height . 45)))

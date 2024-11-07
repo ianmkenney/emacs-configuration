@@ -62,7 +62,7 @@
   (setq ivy-use-virtual-buffers t
 	ivy-count-format "%d/%d")
   :ensure t)
-(use-package color-theme-sanityinc-solarized
+(use-package gruvbox
   :ensure t)
 
 (use-package htmlize
@@ -73,33 +73,64 @@
   :hook (compilation-filter . ansi-color-compilation-filter))
 #+end_src
 
-* Org
+* Projects
 
 #+begin_src elisp
-  (setq org-directory "~/org"
-        org-startup-indented t
-        org-startup-folded t
-        org-log-into-drawer t
-        org-log-done 'time
-        org-log-redeadline 'time
-        org-log-reschedule 'time
-        org-agenda-files '("~/org")
-        org-agenda-files (directory-files-recursively "~/org" "\\.org$")
-        org-default-notes-file (concat org-directory "/inbox.org")
-        org-agenda-use-time-grid t
+  (setq project-switch-commands '((project-find-file "Find file" "f")
+                                  (project-find-dir "Find dir" "d")
+                                  (project-dired "Dired" "D")
+  				;; (consult-ripgrep "ripgrep" "g")
+                                  (magit-project-status "Magit" "m"))
+        )
+#+end_src
+
+* Org
+
+First and foremost, we set the default org-directory
+
+#+begin_src elisp
+  (setq org-directory "~/org")
+#+end_src
+
+** Information organization structures
+
+#+begin_src elisp
+  (setq org-todo-keywords '((sequence "TODO(t)" "ACTIVE(a)" "|" "DONE(d)" "CANCELED(c)" "DELIGATED(D)"))
+        )
+#+end_src
+
+** Capturing
+
+#+begin_src elisp
+  (setq org-default-notes-file (concat org-directory "/inbox.org"))
+#+end_src
+
+** Refiling
+
+#+begin_src elisp
+  (setq org-refile-allow-creating-parent-nodes t
         org-refile-targets '((org-agenda-files :maxlevel . 5))
         org-refile-use-outline-path 'file
         org-outline-path-complete-in-steps nil
-        org-todo-keywords '((sequence "TODO(t)" "ACTIVE(a)" "|" "DONE(d)" "CANCELED(c)" "DELIGATED(D)"))
-        org-refile-allow-creating-parent-nodes t
-        org-archive-subtree-add-inherited-tags t
-        project-switch-commands '((project-find-file "Find file" "f")
-                                  (project-find-dir "Find dir" "d")
-                                  (project-dired "Dired" "D")
-  ;;                                (consult-ripgrep "ripgrep" "g")
-                                  (magit-project-status "Magit" "m"))
-  )
+        )
+#+end_src
 
+** Agenda
+*** Formatting of the agenda view
+
+#+begin_src elisp
+  (setq org-agenda-use-time-grid t)
+#+end_src
+
+*** Specifying agenda files
+
+#+begin_src elisp
+  (setq org-agenda-files (directory-files-recursively org-directory "\\.org$"))
+#+end_src
+
+*** Custom agenda view
+
+#+begin_src elisp
   (defun my-skip-daily ()
     (let ((subtree-end (save-excursion (org-end-of-subtree t))))
     (let ((tags (org-get-tags)))
@@ -146,9 +177,67 @@
   		  ((org-agenda-span 1)
   		   (org-agenda-overriding-header "Today's Tasks")
   		   ))))))
+
+#+end_src
+
+** Structure templating
+
+#+begin_src elisp
+  (require 'org-tempo)
+#+end_src
+
+** Appearance of org buffers
+*** Default starting visibility
+
+#+begin_src elisp
+  (setq org-startup-indented t
+        org-startup-folded t
+        )
+#+end_src
+
+*** Removing visual noise of emphasis markers
+
+We can make different emphasis markers more visually appealing by
+rendering their effects directly and hiding their symbols. See below:
+
+| raw             | rendered      |
+|-----------------+---------------|
+| =*BOLD*=          | *BOLD*          |
+| =_UNDERLINE_=     | _UNDERLINE_     |
+| =/ITALICS/=       | /ITALICS/       |
+| =~code~=          | ~code~          |
+| ==verbatim==      | =verbatim=      |
+| =+strikethrough+= | +strikethrough+ |
+
+
+#+begin_src elisp
+  (setq org-hide-emphasis-markers t)
+#+end_src
+
+*** Making font faces less harsh
+
+I'm not the biggest fan of using =*= for headline markers and after
+seeing it everywhere online, I'm convinced the majority is right by
+using the =org-bullets= package.
+
+#+begin_src elisp
+    (use-package org-bullets
+      :ensure
+      :config
+      (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+#+end_src
+
+Similarly, the displayed symbol for unordered lists can be
+changed. This will change the appearance of =-= to =•=.
+
+#+begin_src elisp
+    (font-lock-add-keywords 'org-mode
+                            '(("^ *\\([-]\\) "
+                               (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
 #+end_src
 
 * UI
+
 #+begin_src elisp
   (setq inhibit-startup-message t)
   (setq ring-bell-function 'ignore)
@@ -163,13 +252,14 @@
   (setq display-line-numbers-type 'relative)
   (global-display-line-numbers-mode)
 
-  (load-theme 'sanityinc-tomorrow-day :no-confirm)
+  (load-theme 'gruvbox-light-hard :no-confirm)
 
   (setq initial-frame-alist
         '((width . 100) (height . 45)))
 
   (setq use-dialog-box nil)
 #+end_src
+
 * Generated files
 
 #+begin_src elisp
