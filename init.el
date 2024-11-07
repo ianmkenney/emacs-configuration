@@ -160,7 +160,7 @@
 (setq display-line-numbers-type 'relative)
 (global-display-line-numbers-mode)
 
-(load-theme 'gruvbox-light-hard :no-confirm)
+(load-theme 'gruvbox-light-medium :no-confirm)
 
 (setq initial-frame-alist
       '((width . 100) (height . 45)))
