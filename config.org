@@ -1,6 +1,6 @@
 #+TITLE: emacs configuration
 #+AUTHOR: Ian Kenney
-#+PROPERTY: header-args :tangle init.el
+#+PROPERTY: header-args :tangle init.el :results none
 
 * Paths and executables
 
@@ -102,7 +102,7 @@ First and foremost, we set the default org-directory
 ** Information organization structures
 
 #+begin_src elisp
-  (setq org-todo-keywords '((sequence "TODO(t)" "ACTIVE(a)" "|" "DONE(d)" "CANCELED(c)" "DELIGATED(D)"))
+  (setq org-todo-keywords '((sequence "TODO(t)" "ACTIVE(a)" "WAITING(w)" "|" "DONE(d)" "CANCELED(c)" "DELIGATED(D)"))
         )
 #+end_src
 
@@ -132,7 +132,11 @@ First and foremost, we set the default org-directory
 *** Specifying agenda files
 
 #+begin_src elisp
-  (setq org-agenda-files (directory-files-recursively org-directory "\\.org$"))
+  (setq org-agenda-files ( list
+  			 (expand-file-name "work.org" org-directory)
+  			 (expand-file-name "personal.org" org-directory)
+  			 (expand-file-name "inbox.org" org-directory)
+  			 ))
 #+end_src
 
 *** Custom agenda view

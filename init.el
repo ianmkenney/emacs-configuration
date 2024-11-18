@@ -68,7 +68,7 @@
 
 (setq org-directory "~/org")
 
-(setq org-todo-keywords '((sequence "TODO(t)" "ACTIVE(a)" "|" "DONE(d)" "CANCELED(c)" "DELIGATED(D)"))
+(setq org-todo-keywords '((sequence "TODO(t)" "ACTIVE(a)" "WAITING(w)" "|" "DONE(d)" "CANCELED(c)" "DELIGATED(D)"))
       )
 
 (setq org-default-notes-file (concat org-directory "/inbox.org"))
@@ -81,7 +81,11 @@
 
 (setq org-agenda-use-time-grid t)
 
-(setq org-agenda-files (directory-files-recursively org-directory "\\.org$"))
+(setq org-agenda-files ( list
+			 (expand-file-name "work.org" org-directory)
+			 (expand-file-name "personal.org" org-directory)
+			 (expand-file-name "inbox.org" org-directory)
+			 ))
 
 (defun my-skip-daily ()
   (let ((subtree-end (save-excursion (org-end-of-subtree t))))
