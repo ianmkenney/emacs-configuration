@@ -166,6 +166,8 @@
 
 (load-theme 'gruvbox-light-medium :no-confirm)
 
+(add-hook 'prog-mode-hook (lambda () (setq show-trailing-whitespace t)))
+
 (setq initial-frame-alist
       '((width . 100) (height . 45)))
 
