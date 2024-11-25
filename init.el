@@ -179,6 +179,6 @@
 (setq make-backup-files -1)
 (custom-set-variables
  '(auto-save-file-name-transforms `((".*"  ,(locate-user-emacs-file "autosaves/") t)))
- '(backup-directory-alist '((".*" . (locate-user-emacs-file "backups/")))))
+ '(backup-directory-alist `((".*" . ,(locate-user-emacs-file "backups/")))))
 
 (make-directory (locate-user-emacs-file "autosaves/") t)
