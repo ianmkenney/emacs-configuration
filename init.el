@@ -56,6 +56,10 @@
   :ensure t
   :defer)
 
+(use-package lua-mode
+  :ensure t
+  :defer)
+
 (use-package ansi-color
   :hook (compilation-filter . ansi-color-compilation-filter))
 
