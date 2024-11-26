@@ -45,8 +45,8 @@
 (use-package ivy
   :config
   (ivy-mode t)
-  (setq ivy-use-virtual-buffers t
-	ivy-count-format "%d/%d")
+  (setq ivy-use-virtual-buffers nil
+      ivy-count-format "%d/%d")
   :ensure t)
 
 (use-package gruvbox-theme
