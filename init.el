@@ -66,7 +66,7 @@
 (setq project-switch-commands '((project-find-file "Find file" "f")
                                 (project-find-dir "Find dir" "d")
                                 (project-dired "Dired" "D")
-				;; (consult-ripgrep "ripgrep" "g")
+  			      ;; (consult-ripgrep "ripgrep" "g")
                                 (magit-project-status "Magit" "m"))
       )
 
@@ -86,57 +86,65 @@
 (setq org-agenda-use-time-grid t)
 
 (setq org-agenda-files ( list
-			 (expand-file-name "work.org" org-directory)
-			 (expand-file-name "personal.org" org-directory)
-			 (expand-file-name "inbox.org" org-directory)
-			 ))
+  		       (expand-file-name "work.org" org-directory)
+  		       (expand-file-name "personal.org" org-directory)
+  		       (expand-file-name "inbox.org" org-directory)
+  		       ))
 
 (defun my-skip-daily ()
   (let ((subtree-end (save-excursion (org-end-of-subtree t))))
-  (let ((tags (org-get-tags)))
-    (if (member "daily" tags)
-	subtree-end nil)
-  )))
+    (let ((tags (org-get-tags)))
+      (if (member "daily" tags)
+          subtree-end nil)
+      )))
+
+(defun my-skip-scheduled-or-deadline ()
+  "Skip entries that are scheduled or have a deadline."
+  (let ((inhibit-read-only t))
+    (org-agenda-skip-entry-if
+     'scheduled
+     'deadline)))
+
 
 (setq org-agenda-custom-commands
       '(
-	("n" "Agenda and all TODOs"
-	 (
-	  (agenda ""
-		  ((org-agenda-overriding-header "DAILY AGENDA\n")
-		   (org-agenda-day-face-function (lambda (date) 'org-agenda-date))
-		   (org-agenda-span 1)
-		   (org-deadline-warning-days 0)
-		   ))
-	  (agenda ""
-		  (
-		   (org-agenda-overriding-header "NEXT 3 DAYS\n")
-		   (org-agenda-span 3)
-		   (org-agenda-start-day "+1d")
-		   (org-deadline-warning-days 0)
-		   (org-agenda-skip-function 'my-skip-daily)
-		   )
-		  )
-	  (agenda ""
-		  (
-		   (org-agenda-overriding-header "UPCOMING DEADLINES\n")
-		   (org-agenda-span 14)
-		   (org-agenda-start-day "+4d")
-		   (org-agenda-show-all-dates nil)
-		   (org-agenda-time-grid nil)
-		   (org-agenda-entry-types '(:deadline))
-		   (org-agenda-skip-function 'my-skip-daily)
-		   (org-deadline-warning-days 0)
-		   )
-		  )
-	  (alltodo "" ((org-agenda-overriding-header "ALL TODOs\n" )
-		       (org-agenda-skip-function 'my-skip-daily)))
-	  ))
-	("d" "Today's Tasks"
-	 ((agenda ""
-		  ((org-agenda-span 1)
-		   (org-agenda-overriding-header "Today's Tasks")
-		   ))))))
+        ("n" "Agenda and all TODOs"
+         (
+          (agenda ""
+                  ((org-agenda-overriding-header "DAILY AGENDA\n")
+                   (org-agenda-day-face-function (lambda (date) 'org-agenda-date))
+                   (org-agenda-span 1)
+                   (org-deadline-warning-days 0)
+                   ))
+          (agenda ""
+                  (
+                   (org-agenda-overriding-header "NEXT 3 DAYS\n")
+                   (org-agenda-span 3)
+                   (org-agenda-start-day "+1d")
+                   (org-deadline-warning-days 0)
+                   (org-agenda-skip-function 'my-skip-daily)
+                   )
+                  )
+          (agenda ""
+                  (
+                   (org-agenda-overriding-header "UPCOMING DEADLINES\n")
+                   (org-agenda-span 14)
+                   (org-agenda-start-day "+4d")
+                   (org-agenda-show-all-dates nil)
+                   (org-agenda-time-grid nil)
+                   (org-agenda-entry-types '(:deadline))
+                   (org-agenda-skip-function 'my-skip-daily)
+                   (org-deadline-warning-days 0)
+                   )
+                  )
+          (alltodo "" ((org-agenda-overriding-header "ALL TODOs\n" )
+                       (org-agenda-skip-function 'my-skip-scheduled-or-deadline)))
+          ))
+        ("d" "Today's Tasks"
+         ((agenda ""
+                  ((org-agenda-span 1)
+                   (org-agenda-overriding-header "Today's Tasks")
+                   ))))))
 
 (require 'org-tempo)
 
@@ -154,6 +162,10 @@
 (font-lock-add-keywords 'org-mode
                         '(("^ *\\([-]\\) "
                            (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+
+(org-babel-do-load-languages
+'org-babel-load-languages
+'((shell . t)))
 
 (setq inhibit-startup-message t)
 (setq ring-bell-function 'ignore)
