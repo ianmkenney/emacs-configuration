@@ -10,6 +10,10 @@
 (global-auto-revert-mode 1)
 (setq global-auto-revert-non-file-buffers t)
 
+(add-to-list 'load-path (locate-user-emacs-file "lisp/"))
+
+(require 'pytest)
+
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 
@@ -188,6 +192,11 @@
       '((width . 100) (height . 45)))
 
 (setq use-dialog-box nil)
+
+(setq tab-bar-show 1)
+
+(set-face-attribute 'tab-bar-tab nil :foreground nil :background nil)
+(set-face-attribute 'tab-bar-tab-inactive nil :inherit 'mode-line :foreground nil :background nil)
 
 (setq custom-file (locate-user-emacs-file "custom-vars.el"))
 (load custom-file 'noerror 'nomessage)
