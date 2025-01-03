@@ -4,6 +4,9 @@
 
 * Paths and executables
 
+Explicitly include user level =bin= since it's not obvious how emacs
+will be launched all the time.
+
 #+begin_src elisp
   (add-to-list 'exec-path "~/local/bin")
   (add-to-list 'exec-path "~/.local/bin")
@@ -124,8 +127,29 @@ First and foremost, we set the default org-directory
 
 ** Capturing
 
+By default, notes should be filed into the inbox.
+
 #+begin_src elisp
   (setq org-default-notes-file (concat org-directory "/inbox.org"))
+#+end_src
+
+*** Templates
+
+We can define our templates here. For some reason I'm unable to set
+the desired paths directly inside the =setq= for
+=org-capture-templates=. I was able to get around this by binding
+variables ahead of time.
+
+#+begin_src elisp :results output
+  (let ((my-org-inbox (expand-file-name "inbox.org" org-directory))
+        (my-org-journal (expand-file-name "journal.org" org-directory)))
+
+  (setq org-capture-templates
+            '(("t" "Todo" entry (file+headline my-org-inbox "Tasks")
+               "* TODO %?\n  %i\n  %a")
+              ("j" "Journal" entry (file+datetree my-org-journal)
+               "* %?\nEntered on %U\n  %i\n  %a")))
+  )
 #+end_src
 
 ** Refiling

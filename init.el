@@ -81,6 +81,16 @@
 
 (setq org-default-notes-file (concat org-directory "/inbox.org"))
 
+(let ((my-org-inbox (expand-file-name "inbox.org" org-directory))
+      (my-org-journal (expand-file-name "journal.org" org-directory)))
+
+(setq org-capture-templates
+          '(("t" "Todo" entry (file+headline my-org-inbox "Tasks")
+             "* TODO %?\n  %i\n  %a")
+            ("j" "Journal" entry (file+datetree my-org-journal)
+             "* %?\nEntered on %U\n  %i\n  %a")))
+)
+
 (setq org-refile-allow-creating-parent-nodes t
       org-refile-targets '((org-agenda-files :maxlevel . 5))
       org-refile-use-outline-path 'file
