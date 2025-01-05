@@ -84,7 +84,7 @@
 (setq org-capture-templates
           `(("t" "Todo" entry (file+headline ,(expand-file-name "inbox.org" org-directory) "Tasks")
              "* TODO %?\n  %i\n  %a")
-            ("j" "Journal" entry (file+datetree ,(expand-file-name "journal.org" org-directory))
+            ("j" "Journal" entry (file+olp+datetree ,(expand-file-name "journal.org" org-directory))
              "* %?\nEntered on %U\n  %i\n  %a")))
 
 (setq org-refile-allow-creating-parent-nodes t
