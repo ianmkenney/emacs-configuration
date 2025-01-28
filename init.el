@@ -190,7 +190,7 @@
 (setq display-line-numbers-type 'relative)
 (global-display-line-numbers-mode)
 
-(load-theme 'gruvbox-light-medium :no-confirm)
+(load-theme 'gruvbox-light-hard :no-confirm)
 
 (add-hook 'prog-mode-hook (lambda () (setq show-trailing-whitespace t)))
 
