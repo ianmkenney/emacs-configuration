@@ -46,12 +46,17 @@
   :ensure t
   :defer)
 
-(use-package ivy
-  :config
-  (ivy-mode t)
-  (setq ivy-use-virtual-buffers nil
-      ivy-count-format "%d/%d")
-  :ensure t)
+(use-package consult
+  :hook (completion-list-mode . consult-preview-at-point-mode)
+  :ensure t
+  :init)
+
+(setq completion-styles '(basic substring partial-completion flex))
+
+(use-package vertico
+  :ensure t
+  :init
+  (vertico-mode))
 
 (use-package gruvbox-theme
   :ensure t)
