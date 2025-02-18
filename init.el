@@ -84,6 +84,8 @@
 (setq org-todo-keywords '((sequence "TODO(t)" "ACTIVE(a)" "WAITING(w)" "|" "DONE(d)" "CANCELED(c)" "DELIGATED(D)"))
       )
 
+(setq org-enforce-todo-dependencies t)
+
 (setq org-default-notes-file (concat org-directory "/inbox.org"))
 
 (setq org-capture-templates
@@ -99,6 +101,8 @@
       )
 
 (setq org-agenda-use-time-grid t)
+
+(setq org-agenda-dim-blocked-tasks t)
 
 (setq org-agenda-files ( list
   		       (expand-file-name "work.org" org-directory)

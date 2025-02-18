@@ -130,6 +130,12 @@ First and foremost, we set the default org-directory
         )
 #+end_src
 
+Dependencies should be enforced
+
+#+begin_src elisp
+  (setq org-enforce-todo-dependencies t)
+#+end_src
+
 ** Capturing
 
 By default, notes should be filed into the inbox.
@@ -168,6 +174,12 @@ variables ahead of time.
 
 #+begin_src elisp
   (setq org-agenda-use-time-grid t)
+#+end_src
+
+Blocked tasks should be dimmed.
+
+#+begin_src elisp
+  (setq org-agenda-dim-blocked-tasks t)
 #+end_src
 
 *** Specifying agenda files
