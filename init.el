@@ -75,7 +75,7 @@
 (setq project-switch-commands '((project-find-file "Find file" "f")
                                 (project-find-dir "Find dir" "d")
                                 (project-dired "Dired" "D")
-  			      ;; (consult-ripgrep "ripgrep" "g")
+  				;; (consult-ripgrep "ripgrep" "g")
                                 (magit-project-status "Magit" "m"))
       )
 
@@ -89,10 +89,10 @@
 (setq org-default-notes-file (concat org-directory "/inbox.org"))
 
 (setq org-capture-templates
-          `(("t" "Todo" entry (file+headline ,(expand-file-name "inbox.org" org-directory) "Tasks")
-             "* TODO %?\n  %i\n  %a")
-            ("j" "Journal" entry (file+olp+datetree ,(expand-file-name "journal.org" org-directory))
-             "* %?\nEntered on %U\n  %i\n  %a")))
+      `(("t" "Todo" entry (file+headline ,(expand-file-name "inbox.org" org-directory) "Tasks")
+         "* TODO %?\n  %i\n  %a")
+        ("j" "Journal" entry (file+olp+datetree ,(expand-file-name "journal.org" org-directory))
+         "* %?\nEntered on %U\n  %i\n  %a")))
 
 (setq org-refile-allow-creating-parent-nodes t
       org-refile-targets '((org-agenda-files :maxlevel . 5))
@@ -105,10 +105,10 @@
 (setq org-agenda-dim-blocked-tasks t)
 
 (setq org-agenda-files ( list
-  		       (expand-file-name "work.org" org-directory)
-  		       (expand-file-name "personal.org" org-directory)
-  		       (expand-file-name "inbox.org" org-directory)
-  		       ))
+  			 (expand-file-name "work.org" org-directory)
+  			 (expand-file-name "personal.org" org-directory)
+  			 (expand-file-name "inbox.org" org-directory)
+  			 ))
 
 (defun my-skip-daily ()
   (let ((subtree-end (save-excursion (org-end-of-subtree t))))
@@ -183,15 +183,18 @@
                            (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
 
 (org-babel-do-load-languages
-'org-babel-load-languages
-'((shell . t)))
+ 'org-babel-load-languages
+ '((shell . t)))
+
+(setq org-edit-src-content-indentation 0)
+(setq org-src-preserve-indentation t)
 
 (setq inhibit-startup-message t)
 (setq ring-bell-function 'ignore)
 
 (pcase system-type
-      ('darwin (menu-bar-mode t)) ;; I only want a menu bar if it's a mac
-      (t (menu-bar-mode -1)))
+  ('darwin (menu-bar-mode t)) ;; I only want a menu bar if it's a mac
+  (t (menu-bar-mode -1)))
 
 (tool-bar-mode -1)
 (scroll-bar-mode -1)

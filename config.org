@@ -8,21 +8,21 @@ Explicitly include user level =bin= since it's not obvious how emacs
 will be launched all the time.
 
 #+begin_src elisp
-  (add-to-list 'exec-path "~/local/bin")
-  (add-to-list 'exec-path "~/.local/bin")
+(add-to-list 'exec-path "~/local/bin")
+(add-to-list 'exec-path "~/.local/bin")
 #+end_src
 
 * History, recent files, and buffer reversion
 
 #+begin_src elisp
-  (recentf-mode 1)
-  (global-set-key (kbd "C-x C-r") 'recentf-open)
-  (global-set-key (kbd "C-c a") 'org-agenda)
-  (setq history-length 10)
-  (savehist-mode 1)
+(recentf-mode 1)
+(global-set-key (kbd "C-x C-r") 'recentf-open)
+(global-set-key (kbd "C-c a") 'org-agenda)
+(setq history-length 10)
+(savehist-mode 1)
 
-  (global-auto-revert-mode 1)
-  (setq global-auto-revert-non-file-buffers t)
+(global-auto-revert-mode 1)
+(setq global-auto-revert-non-file-buffers t)
 #+end_src
 
 * Packages
@@ -31,88 +31,88 @@ will be launched all the time.
 Custom single file packages are kept in the =lisp/= subdirectory.
 
 #+begin_src elisp
-  (add-to-list 'load-path (locate-user-emacs-file "lisp/"))
+(add-to-list 'load-path (locate-user-emacs-file "lisp/"))
 #+end_src
 
 #+begin_src elisp
-  (require 'pytest)
+(require 'pytest)
 #+end_src
 
 ** Repository setup
 
 #+begin_src elisp
-  (require 'package)
-  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 #+end_src
 
 ** Package installation and configuration
 
 #+begin_src elisp
-  (use-package elfeed
-    :ensure t
-    :defer)
+(use-package elfeed
+  :ensure t
+  :defer)
 
-  (use-package company
-    :config
-    (global-company-mode t)
-    :ensure t)
+(use-package company
+  :config
+  (global-company-mode t)
+  :ensure t)
 
-  (use-package ledger-mode
-    :ensure t
-    :defer)
+(use-package ledger-mode
+  :ensure t
+  :defer)
 
-  (use-package eglot
-    :ensure t
-    :defer)
+(use-package eglot
+  :ensure t
+  :defer)
 
-  (use-package git-gutter
-    :config
-    (global-git-gutter-mode t)
-    (global-git-gutter-mode +1)
-    (global-set-key (kbd "M-g p") 'git-gutter:previous-hunk)
-    (global-set-key (kbd "M-g n") 'git-gutter:next-hunk)
-    :ensure t)
+(use-package git-gutter
+  :config
+  (global-git-gutter-mode t)
+  (global-git-gutter-mode +1)
+  (global-set-key (kbd "M-g p") 'git-gutter:previous-hunk)
+  (global-set-key (kbd "M-g n") 'git-gutter:next-hunk)
+  :ensure t)
 
-  (use-package magit
-    :ensure t
-    :defer)
+(use-package magit
+  :ensure t
+  :defer)
 
-  (use-package consult
-    :hook (completion-list-mode . consult-preview-at-point-mode)
-    :ensure t
-    :init)
+(use-package consult
+  :hook (completion-list-mode . consult-preview-at-point-mode)
+  :ensure t
+  :init)
 
-  (setq completion-styles '(basic substring partial-completion flex))
+(setq completion-styles '(basic substring partial-completion flex))
 
-  (use-package vertico
-    :ensure t
-    :init
-    (vertico-mode))
+(use-package vertico
+  :ensure t
+  :init
+  (vertico-mode))
 
-  (use-package gruvbox-theme
-    :ensure t)
+(use-package gruvbox-theme
+  :ensure t)
 
-  (use-package htmlize
-    :ensure t
-    :defer)
+(use-package htmlize
+  :ensure t
+  :defer)
 
-  (use-package lua-mode
-    :ensure t
-    :defer)
+(use-package lua-mode
+  :ensure t
+  :defer)
 
-  (use-package ansi-color
-    :hook (compilation-filter . ansi-color-compilation-filter))
+(use-package ansi-color
+  :hook (compilation-filter . ansi-color-compilation-filter))
 #+end_src
 
 * Projects
 
 #+begin_src elisp
-  (setq project-switch-commands '((project-find-file "Find file" "f")
-                                  (project-find-dir "Find dir" "d")
-                                  (project-dired "Dired" "D")
+(setq project-switch-commands '((project-find-file "Find file" "f")
+                                (project-find-dir "Find dir" "d")
+                                (project-dired "Dired" "D")
   				;; (consult-ripgrep "ripgrep" "g")
-                                  (magit-project-status "Magit" "m"))
-        )
+                                (magit-project-status "Magit" "m"))
+      )
 #+end_src
 
 * Org
@@ -120,20 +120,20 @@ Custom single file packages are kept in the =lisp/= subdirectory.
 First and foremost, we set the default org-directory
 
 #+begin_src elisp
-  (setq org-directory "~/org")
+(setq org-directory "~/org")
 #+end_src
 
 ** Information organization structures
 
 #+begin_src elisp
-  (setq org-todo-keywords '((sequence "TODO(t)" "ACTIVE(a)" "WAITING(w)" "|" "DONE(d)" "CANCELED(c)" "DELIGATED(D)"))
-        )
+(setq org-todo-keywords '((sequence "TODO(t)" "ACTIVE(a)" "WAITING(w)" "|" "DONE(d)" "CANCELED(c)" "DELIGATED(D)"))
+      )
 #+end_src
 
 Dependencies should be enforced
 
 #+begin_src elisp
-  (setq org-enforce-todo-dependencies t)
+(setq org-enforce-todo-dependencies t)
 #+end_src
 
 ** Capturing
@@ -141,7 +141,7 @@ Dependencies should be enforced
 By default, notes should be filed into the inbox.
 
 #+begin_src elisp
-  (setq org-default-notes-file (concat org-directory "/inbox.org"))
+(setq org-default-notes-file (concat org-directory "/inbox.org"))
 #+end_src
 
 *** Templates
@@ -152,40 +152,40 @@ the desired paths directly inside the =setq= for
 variables ahead of time.
 
 #+begin_src elisp :results output
-  (setq org-capture-templates
-            `(("t" "Todo" entry (file+headline ,(expand-file-name "inbox.org" org-directory) "Tasks")
-               "* TODO %?\n  %i\n  %a")
-              ("j" "Journal" entry (file+olp+datetree ,(expand-file-name "journal.org" org-directory))
-               "* %?\nEntered on %U\n  %i\n  %a")))
+(setq org-capture-templates
+      `(("t" "Todo" entry (file+headline ,(expand-file-name "inbox.org" org-directory) "Tasks")
+         "* TODO %?\n  %i\n  %a")
+        ("j" "Journal" entry (file+olp+datetree ,(expand-file-name "journal.org" org-directory))
+         "* %?\nEntered on %U\n  %i\n  %a")))
 #+end_src
 
 ** Refiling
 
 #+begin_src elisp
-  (setq org-refile-allow-creating-parent-nodes t
-        org-refile-targets '((org-agenda-files :maxlevel . 5))
-        org-refile-use-outline-path 'file
-        org-outline-path-complete-in-steps nil
-        )
+(setq org-refile-allow-creating-parent-nodes t
+      org-refile-targets '((org-agenda-files :maxlevel . 5))
+      org-refile-use-outline-path 'file
+      org-outline-path-complete-in-steps nil
+      )
 #+end_src
 
 ** Agenda
 *** Formatting of the agenda view
 
 #+begin_src elisp
-  (setq org-agenda-use-time-grid t)
+(setq org-agenda-use-time-grid t)
 #+end_src
 
 Blocked tasks should be dimmed.
 
 #+begin_src elisp
-  (setq org-agenda-dim-blocked-tasks t)
+(setq org-agenda-dim-blocked-tasks t)
 #+end_src
 
 *** Specifying agenda files
 
 #+begin_src elisp
-  (setq org-agenda-files ( list
+(setq org-agenda-files ( list
   			 (expand-file-name "work.org" org-directory)
   			 (expand-file-name "personal.org" org-directory)
   			 (expand-file-name "inbox.org" org-directory)
@@ -195,76 +195,76 @@ Blocked tasks should be dimmed.
 *** Custom agenda view
 
 #+begin_src elisp
-  (defun my-skip-daily ()
-    (let ((subtree-end (save-excursion (org-end-of-subtree t))))
-      (let ((tags (org-get-tags)))
-        (if (member "daily" tags)
-            subtree-end nil)
-        )))
+(defun my-skip-daily ()
+  (let ((subtree-end (save-excursion (org-end-of-subtree t))))
+    (let ((tags (org-get-tags)))
+      (if (member "daily" tags)
+          subtree-end nil)
+      )))
 
-  (defun my-skip-scheduled-or-deadline ()
-    "Skip entries that are scheduled or have a deadline."
-    (let ((inhibit-read-only t))
-      (org-agenda-skip-entry-if
-       'scheduled
-       'deadline)))
+(defun my-skip-scheduled-or-deadline ()
+  "Skip entries that are scheduled or have a deadline."
+  (let ((inhibit-read-only t))
+    (org-agenda-skip-entry-if
+     'scheduled
+     'deadline)))
 
 
-  (setq org-agenda-custom-commands
-        '(
-          ("n" "Agenda and all TODOs"
-           (
-            (agenda ""
-                    ((org-agenda-overriding-header "DAILY AGENDA\n")
-                     (org-agenda-day-face-function (lambda (date) 'org-agenda-date))
-                     (org-agenda-span 1)
-                     (org-deadline-warning-days 0)
-                     ))
-            (agenda ""
-                    (
-                     (org-agenda-overriding-header "NEXT 3 DAYS\n")
-                     (org-agenda-span 3)
-                     (org-agenda-start-day "+1d")
-                     (org-deadline-warning-days 0)
-                     (org-agenda-skip-function 'my-skip-daily)
-                     )
-                    )
-            (agenda ""
-                    (
-                     (org-agenda-overriding-header "UPCOMING DEADLINES\n")
-                     (org-agenda-span 14)
-                     (org-agenda-start-day "+4d")
-                     (org-agenda-show-all-dates nil)
-                     (org-agenda-time-grid nil)
-                     (org-agenda-entry-types '(:deadline))
-                     (org-agenda-skip-function 'my-skip-daily)
-                     (org-deadline-warning-days 0)
-                     )
-                    )
-            (alltodo "" ((org-agenda-overriding-header "ALL TODOs\n" )
-                         (org-agenda-skip-function 'my-skip-scheduled-or-deadline)))
-            ))
-          ("d" "Today's Tasks"
-           ((agenda ""
-                    ((org-agenda-span 1)
-                     (org-agenda-overriding-header "Today's Tasks")
-                     ))))))
+(setq org-agenda-custom-commands
+      '(
+        ("n" "Agenda and all TODOs"
+         (
+          (agenda ""
+                  ((org-agenda-overriding-header "DAILY AGENDA\n")
+                   (org-agenda-day-face-function (lambda (date) 'org-agenda-date))
+                   (org-agenda-span 1)
+                   (org-deadline-warning-days 0)
+                   ))
+          (agenda ""
+                  (
+                   (org-agenda-overriding-header "NEXT 3 DAYS\n")
+                   (org-agenda-span 3)
+                   (org-agenda-start-day "+1d")
+                   (org-deadline-warning-days 0)
+                   (org-agenda-skip-function 'my-skip-daily)
+                   )
+                  )
+          (agenda ""
+                  (
+                   (org-agenda-overriding-header "UPCOMING DEADLINES\n")
+                   (org-agenda-span 14)
+                   (org-agenda-start-day "+4d")
+                   (org-agenda-show-all-dates nil)
+                   (org-agenda-time-grid nil)
+                   (org-agenda-entry-types '(:deadline))
+                   (org-agenda-skip-function 'my-skip-daily)
+                   (org-deadline-warning-days 0)
+                   )
+                  )
+          (alltodo "" ((org-agenda-overriding-header "ALL TODOs\n" )
+                       (org-agenda-skip-function 'my-skip-scheduled-or-deadline)))
+          ))
+        ("d" "Today's Tasks"
+         ((agenda ""
+                  ((org-agenda-span 1)
+                   (org-agenda-overriding-header "Today's Tasks")
+                   ))))))
 
 #+end_src
 
 ** Structure templating
 
 #+begin_src elisp
-  (require 'org-tempo)
+(require 'org-tempo)
 #+end_src
 
 ** Appearance of org buffers
 *** Default starting visibility
 
 #+begin_src elisp
-  (setq org-startup-indented t
-        org-startup-folded t
-        )
+(setq org-startup-indented t
+      org-startup-folded t
+      )
 #+end_src
 
 *** Removing visual noise of emphasis markers
@@ -283,7 +283,7 @@ rendering their effects directly and hiding their symbols. See below:
 
 
 #+begin_src elisp
-  (setq org-hide-emphasis-markers t)
+(setq org-hide-emphasis-markers t)
 #+end_src
 
 *** Making font faces less harsh
@@ -293,63 +293,68 @@ seeing it everywhere online, I'm convinced the majority is right by
 using the =org-bullets= package.
 
 #+begin_src elisp
-    (use-package org-bullets
-      :ensure
-      :config
-      (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+(use-package org-bullets
+  :ensure
+  :config
+  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 #+end_src
 
 Similarly, the displayed symbol for unordered lists can be
 changed. This will change the appearance of =-= to =•=.
 
 #+begin_src elisp
-    (font-lock-add-keywords 'org-mode
-                            '(("^ *\\([-]\\) "
-                               (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+(font-lock-add-keywords 'org-mode
+                        '(("^ *\\([-]\\) "
+                           (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
 #+end_src
 
 ** Babel
 
 #+begin_src elisp
-  (org-babel-do-load-languages
-  'org-babel-load-languages
-  '((shell . t)))
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((shell . t)))
+#+end_src
+
+#+begin_src elisp
+(setq org-edit-src-content-indentation 0)
+(setq org-src-preserve-indentation t)
 #+end_src
 
 * UI
 
 #+begin_src elisp
-  (setq inhibit-startup-message t)
-  (setq ring-bell-function 'ignore)
+(setq inhibit-startup-message t)
+(setq ring-bell-function 'ignore)
 
-  (pcase system-type
-        ('darwin (menu-bar-mode t)) ;; I only want a menu bar if it's a mac
-        (t (menu-bar-mode -1)))
+(pcase system-type
+  ('darwin (menu-bar-mode t)) ;; I only want a menu bar if it's a mac
+  (t (menu-bar-mode -1)))
 
-  (tool-bar-mode -1)
-  (scroll-bar-mode -1)
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
 
-  (setq display-line-numbers-type 'relative)
-  (global-display-line-numbers-mode)
+(setq display-line-numbers-type 'relative)
+(global-display-line-numbers-mode)
 
-  (load-theme 'gruvbox-light-hard :no-confirm)
+(load-theme 'gruvbox-light-hard :no-confirm)
 
-  (add-hook 'prog-mode-hook (lambda () (setq show-trailing-whitespace t)))
+(add-hook 'prog-mode-hook (lambda () (setq show-trailing-whitespace t)))
 
-  (setq initial-frame-alist
-        '((width . 100) (height . 45)))
+(setq initial-frame-alist
+      '((width . 100) (height . 45)))
 
-  (setq use-dialog-box nil)
+(setq use-dialog-box nil)
 #+end_src
 
 ** Tabs
 
 #+begin_src elisp
 
-  (setq tab-bar-show 1)
+(setq tab-bar-show 1)
 
-  (set-face-attribute 'tab-bar-tab nil :foreground nil :background nil)
-  (set-face-attribute 'tab-bar-tab-inactive nil :inherit 'mode-line :foreground nil :background nil)
+(set-face-attribute 'tab-bar-tab nil :foreground nil :background nil)
+(set-face-attribute 'tab-bar-tab-inactive nil :inherit 'mode-line :foreground nil :background nil)
 
 #+end_src
 
