@@ -104,11 +104,12 @@
 
 (setq org-agenda-dim-blocked-tasks t)
 
-(setq org-agenda-files ( list
-  			 (expand-file-name "work.org" org-directory)
-  			 (expand-file-name "personal.org" org-directory)
-  			 (expand-file-name "inbox.org" org-directory)
-  			 ))
+(setq org-agenda-files (list
+			(expand-file-name "work.org" org-directory)
+			(expand-file-name "personal.org" org-directory)
+			(expand-file-name "inbox.org" org-directory)
+			(expand-file-name "notes.org" org-directory)
+			))
 
 (defun my-skip-daily ()
   (let ((subtree-end (save-excursion (org-end-of-subtree t))))

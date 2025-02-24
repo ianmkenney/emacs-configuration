@@ -185,11 +185,12 @@ Blocked tasks should be dimmed.
 *** Specifying agenda files
 
 #+begin_src elisp
-(setq org-agenda-files ( list
-  			 (expand-file-name "work.org" org-directory)
-  			 (expand-file-name "personal.org" org-directory)
-  			 (expand-file-name "inbox.org" org-directory)
-  			 ))
+(setq org-agenda-files (list
+			(expand-file-name "work.org" org-directory)
+			(expand-file-name "personal.org" org-directory)
+			(expand-file-name "inbox.org" org-directory)
+			(expand-file-name "notes.org" org-directory)
+			))
 #+end_src
 
 *** Custom agenda view
