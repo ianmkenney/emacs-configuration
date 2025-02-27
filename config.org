@@ -36,6 +36,7 @@ Custom single file packages are kept in the =lisp/= subdirectory.
 
 #+begin_src elisp
 (require 'pytest)
+(require 'pythontooling)
 #+end_src
 
 ** Repository setup

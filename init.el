@@ -13,6 +13,7 @@
 (add-to-list 'load-path (locate-user-emacs-file "lisp/"))
 
 (require 'pytest)
+(require 'pythontooling)
 
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
