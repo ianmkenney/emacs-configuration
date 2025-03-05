@@ -124,6 +124,12 @@ First and foremost, we set the default org-directory
 (setq org-directory "~/org")
 #+end_src
 
+and set relevant hooks
+
+#+begin_src elisp
+(add-hook 'org-mode-hook 'flyspell-prog-mode)
+#+end_src
+
 ** Information organization structures
 
 #+begin_src elisp
@@ -323,7 +329,7 @@ changed. This will change the appearance of =-= to =•=.
 (setq org-src-preserve-indentation t)
 #+end_src
 
-* UI
+* User interface
 
 #+begin_src elisp
 (setq inhibit-startup-message t)
@@ -339,7 +345,7 @@ changed. This will change the appearance of =-= to =•=.
 (setq display-line-numbers-type 'relative)
 (global-display-line-numbers-mode)
 
-(load-theme 'gruvbox-light-hard :no-confirm)
+(load-theme 'gruvbox :no-confirm)
 
 (add-hook 'prog-mode-hook (lambda () (setq show-trailing-whitespace t)))
 
@@ -372,4 +378,10 @@ changed. This will change the appearance of =-= to =•=.
  '(backup-directory-alist `((".*" . ,(locate-user-emacs-file "backups/")))))
 
 (make-directory (locate-user-emacs-file "autosaves/") t)
+#+end_src
+
+* =magit=
+
+#+begin_src elisp
+(add-hook 'git-commit-mode-hook 'flyspell-prog-mode)
 #+end_src
