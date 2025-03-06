@@ -116,6 +116,15 @@ Custom single file packages are kept in the =lisp/= subdirectory.
       )
 #+end_src
 
+Disable save file prompt before compiling. While this is generally
+useful it gets in my way more than it helps me. Most of the time I
+have unrelated open files (such as org) that might be in incomplete
+states. Better to just disable.
+
+
+#+begin_src elisp
+(setq compilation-save-buffers-predicate 'ignore)
+#+end_src
 * Org
 
 First and foremost, we set the default org-directory

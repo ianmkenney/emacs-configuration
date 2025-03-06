@@ -80,6 +80,8 @@
                                 (magit-project-status "Magit" "m"))
       )
 
+(setq compilation-save-buffers-predicate 'ignore)
+
 (setq org-directory "~/org")
 
 (add-hook 'org-mode-hook 'flyspell-prog-mode)
