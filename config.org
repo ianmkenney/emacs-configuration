@@ -167,14 +167,34 @@ the desired paths directly inside the =setq= for
 =org-capture-templates=. I was able to get around this by binding
 variables ahead of time.
 
-#+begin_src elisp :results output
-(setq org-capture-templates
-      `(("t" "Todo" entry (file+headline ,(expand-file-name "inbox.org" org-directory) "Tasks")
-         "* TODO %?\n  %i\n  %a")
-        ("j" "Journal" entry (file+olp+datetree ,(expand-file-name "journal.org" org-directory))
-         "* %?\nEntered on %U\n  %i\n  %a")))
-#+end_src
+#+begin_src elisp
+(defun org-filename (file)
+  (expand-file-name file org-directory))
 
+(setq org-capture-templates '())
+
+(push `("t" "Todo" entry (file+headline ,(org-filename "inbox.org") "Tasks")
+        "* TODO %?\n  %i\n  %a")
+      org-capture-templates)
+
+(push '("u" "Templates for work") org-capture-templates)
+
+(push `("ui" "GitHub issue" entry (file+headline ,(org-filename "work.org") "Tasks")
+	,(concat
+	  "* TODO %? [/] \n\n"
+	  "Issue: [[%^{Link to issue}][Link to issue]]\n"
+	  "PR:    [[%^{Link to PR}][Link to PR]]\n"
+	  "\n"
+	  "** Checklist [/]\n\n"
+	  "- [ ] Issue linked to PR\n"
+	  "- [ ] Tests\n"
+	  "- [ ] Docs\n"
+	  "- [ ] Issues raised from discovery\n"
+	  "- [ ] PR merged or closed\n"
+	  "\n"
+	  "** Implementation notes"))
+      org-capture-templates)
+#+end_src
 ** Refiling
 
 #+begin_src elisp
