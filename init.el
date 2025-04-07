@@ -50,7 +50,8 @@
 (use-package consult
   :hook (completion-list-mode . consult-preview-at-point-mode)
   :ensure t
-  :init)
+  :init
+  (global-set-key (kbd "C-c g") 'consult-grep))
 
 (setq completion-styles '(basic substring partial-completion flex))
 
@@ -76,7 +77,7 @@
 (setq project-switch-commands '((project-find-file "Find file" "f")
                                 (project-find-dir "Find dir" "d")
                                 (project-dired "Dired" "D")
-  				;; (consult-ripgrep "ripgrep" "g")
+  				  (consult-grep "ripgrep" "g")
                                 (magit-project-status "Magit" "m"))
       )
 
