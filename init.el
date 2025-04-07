@@ -84,7 +84,8 @@
 
 (setq org-directory "~/org")
 
-(add-hook 'org-mode-hook 'flyspell-prog-mode)
+(when (not (string= (system-name) "dainn"))
+    (add-hook 'org-mode-hook 'flyspell-prog-mode))
 
 (setq org-todo-keywords '((sequence "TODO(t)" "ACTIVE(a)" "WAITING(w)" "|" "DONE(d)" "CANCELED(c)" "DELIGATED(D)"))
       )
@@ -229,7 +230,7 @@
 (setq display-line-numbers-type 'relative)
 (global-display-line-numbers-mode)
 
-(load-theme 'gruvbox :no-confirm)
+;; (load-theme 'gruvbox :no-confirm)
 
 (add-hook 'prog-mode-hook (lambda () (setq show-trailing-whitespace t)))
 

@@ -136,8 +136,11 @@ First and foremost, we set the default org-directory
 and set relevant hooks
 
 #+begin_src elisp
-(add-hook 'org-mode-hook 'flyspell-prog-mode)
+(when (not (string= (system-name) "dainn"))
+    (add-hook 'org-mode-hook 'flyspell-prog-mode))
 #+end_src
+
+Currently, I'm experiencing freezing on my laptop, =dainn=, so I'm just disabling it there for now.
 
 ** Information organization structures
 
@@ -374,7 +377,7 @@ changed. This will change the appearance of =-= to =•=.
 (setq display-line-numbers-type 'relative)
 (global-display-line-numbers-mode)
 
-(load-theme 'gruvbox :no-confirm)
+;; (load-theme 'gruvbox :no-confirm)
 
 (add-hook 'prog-mode-hook (lambda () (setq show-trailing-whitespace t)))
 
