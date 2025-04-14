@@ -51,7 +51,7 @@
   :hook (completion-list-mode . consult-preview-at-point-mode)
   :ensure t
   :init
-  (global-set-key (kbd "C-c g") 'consult-grep))
+  (global-set-key (kbd "C-c g") 'consult-ripgrep))
 
 (setq completion-styles '(basic substring partial-completion flex))
 
