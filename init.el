@@ -255,4 +255,5 @@
 
 (make-directory (locate-user-emacs-file "autosaves/") t)
 
-(add-hook 'git-commit-mode-hook 'flyspell-prog-mode)
+(when (not (string= (system-name) "dainn"))
+  (add-hook 'git-commit-mode-hook 'flyspell-prog-mode))

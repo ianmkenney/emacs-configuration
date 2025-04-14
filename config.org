@@ -416,5 +416,6 @@ changed. This will change the appearance of =-= to =•=.
 * =magit=
 
 #+begin_src elisp
-(add-hook 'git-commit-mode-hook 'flyspell-prog-mode)
+(when (not (string= (system-name) "dainn"))
+  (add-hook 'git-commit-mode-hook 'flyspell-prog-mode))
 #+end_src
