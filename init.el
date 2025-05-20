@@ -137,6 +137,7 @@
 			(expand-file-name "personal.org" org-directory)
 			(expand-file-name "inbox.org" org-directory)
 			(expand-file-name "notes.org" org-directory)
+			(expand-file-name "meeting.org" org-directory)
 			))
 
 (defun my-skip-daily ()
@@ -237,6 +238,9 @@
 
 (setq initial-frame-alist
       '((width . 100) (height . 45)))
+
+(add-to-list 'default-frame-alist
+             '(font . "Fira Code-14"))
 
 (setq use-dialog-box nil)
 
