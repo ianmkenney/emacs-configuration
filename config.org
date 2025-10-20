@@ -26,6 +26,11 @@
 (setq use-dialog-box nil)
 #+end_src
 
+#+begin_src elisp
+(setq epa-pinentry-mode 'loopback)
+(setq epa-keys-select-method 'minibuffer)
+#+end_src
+
 * Paths and executables
 
 Explicitly include user level =bin= since it's not obvious how emacs
@@ -94,6 +99,25 @@ Custom single file packages are kept in the =lisp/= subdirectory.
   :init
   (vertico-mode))
 
+(use-package org-roam
+  :ensure t
+  :custom
+  (org-roam-directory "~/Documents/roam/")
+  (org-roam-capture-templates
+   '(("d" "default" plain "%?"
+      :target (file+head "${slug}.org"
+			 "#+title: ${title}\n")
+      :unnarrowed t)
+     ("e" "encrypted" plain "%?"
+      :target (file+head "${slug}.org.gpg"
+			 "#+title: ${title}\n")
+      :unnarrowed t)))
+  :bind (("C-c n l" . org-roam-buffer-toggle)
+	 ("C-c n f" . org-roam-node-find)
+	 ("C-c n i" . org-roam-node-insert))
+  :config
+  (org-roam-setup))
+
 #+end_src
 
 * Projects
@@ -117,6 +141,16 @@ states. Better to just disable.
 (setq compilation-save-buffers-predicate 'ignore)
 #+end_src
 * Org
+** Keybinds
+#+begin_src elisp
+(global-set-key (kbd "C-c a") 'org-agenda)
+#+end_src
+** Agenda
+
+#+begin_src elisp
+(setq org-agenda-files '("~/Documents/roam"))
+(setq org-agenda-file-regexp "\\`[^.].*\\.org\\\(\\.gpg\\\)?\\'")
+#+end_src
 
 ** Information organization structures
 

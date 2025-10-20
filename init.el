@@ -18,6 +18,9 @@
 
 (setq use-dialog-box nil)
 
+(setq epa-pinentry-mode 'loopback)
+(setq epa-keys-select-method 'minibuffer)
+
 (add-to-list 'exec-path "~/local/bin")
 (add-to-list 'exec-path "~/.local/bin")
 
@@ -63,6 +66,25 @@
   :init
   (vertico-mode))
 
+(use-package org-roam
+  :ensure t
+  :custom
+  (org-roam-directory "~/Documents/roam/")
+  (org-roam-capture-templates
+   '(("d" "default" plain "%?"
+      :target (file+head "${slug}.org"
+			 "#+title: ${title}\n")
+      :unnarrowed t)
+     ("e" "encrypted" plain "%?"
+      :target (file+head "${slug}.org.gpg"
+			 "#+title: ${title}\n")
+      :unnarrowed t)))
+  :bind (("C-c n l" . org-roam-buffer-toggle)
+	 ("C-c n f" . org-roam-node-find)
+	 ("C-c n i" . org-roam-node-insert))
+  :config
+  (org-roam-setup))
+
 (setq project-switch-commands '((project-find-file "Find file" "f")
                                 (project-find-dir "Find dir" "d")
                                 (project-dired "Dired" "D")
@@ -71,6 +93,9 @@
       )
 
 (setq compilation-save-buffers-predicate 'ignore)
+
+(setq org-agenda-files '("~/Documents/roam"))
+(setq org-agenda-file-regexp "\\`[^.].*\\.org\\\(\\.gpg\\\)?\\'")
 
 (setq org-todo-keywords '((sequence "TODO(t)" "ACTIVE(a)" "WAITING(w)" "|" "DONE(d)" "CANCELED(c)" "DELIGATED(D)"))
       )
