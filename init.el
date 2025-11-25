@@ -1,3 +1,4 @@
+(load-theme 'modus-operandi-tinted)
 (setq inhibit-startup-message t)
 (setq ring-bell-function 'ignore)
 
@@ -93,6 +94,8 @@
       )
 
 (setq compilation-save-buffers-predicate 'ignore)
+
+(global-set-key (kbd "C-c a") 'org-agenda)
 
 (setq org-agenda-files '("~/Documents/roam"))
 (setq org-agenda-file-regexp "\\`[^.].*\\.org\\\(\\.gpg\\\)?\\'")

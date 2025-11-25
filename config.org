@@ -5,6 +5,7 @@
 * User interface
 
 #+begin_src elisp
+(load-theme 'modus-operandi-tinted)
 (setq inhibit-startup-message t)
 (setq ring-bell-function 'ignore)
 
@@ -142,9 +143,11 @@ states. Better to just disable.
 #+end_src
 * Org
 ** Keybinds
+
 #+begin_src elisp
 (global-set-key (kbd "C-c a") 'org-agenda)
 #+end_src
+
 ** Agenda
 
 #+begin_src elisp
@@ -193,7 +196,6 @@ rendering their effects directly and hiding their symbols. See below:
 | =~code~=          | ~code~          |
 | ==verbatim==      | =verbatim=      |
 | =+strikethrough+= | +strikethrough+ |
-
 
 #+begin_src elisp
 (setq org-hide-emphasis-markers t)
