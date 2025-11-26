@@ -119,6 +119,10 @@ Custom single file packages are kept in the =lisp/= subdirectory.
   :config
   (org-roam-setup))
 
+(use-package ansi-color
+  :ensure t
+  :hook (compilation-filter . ansi-color-compilation-filter))
+
 #+end_src
 
 * Projects
@@ -137,10 +141,10 @@ useful it gets in my way more than it helps me. Most of the time I
 have unrelated open files (such as org) that might be in incomplete
 states. Better to just disable.
 
-
 #+begin_src elisp
 (setq compilation-save-buffers-predicate 'ignore)
 #+end_src
+
 * Org
 ** Keybinds
 
@@ -234,6 +238,15 @@ changed. This will change the appearance of =-= to =•=.
 #+begin_src elisp
 (setq org-edit-src-content-indentation 0)
 (setq org-src-preserve-indentation t)
+#+end_src
+
+* Buffer control
+
+By default, dired leaves around a bunch of buffers that I never care
+to see again.
+
+#+begin_src elisp
+(setq dired-kill-when-opening-new-dired-buffer t)
 #+end_src
 
 * Generated files

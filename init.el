@@ -86,6 +86,10 @@
   :config
   (org-roam-setup))
 
+(use-package ansi-color
+  :ensure t
+  :hook (compilation-filter . ansi-color-compilation-filter))
+
 (setq project-switch-commands '((project-find-file "Find file" "f")
                                 (project-find-dir "Find dir" "d")
                                 (project-dired "Dired" "D")
@@ -128,6 +132,8 @@
 
 (setq org-edit-src-content-indentation 0)
 (setq org-src-preserve-indentation t)
+
+(setq dired-kill-when-opening-new-dired-buffer t)
 
 (setq custom-file (locate-user-emacs-file "custom-vars.el"))
 (setq make-backup-files nil)
