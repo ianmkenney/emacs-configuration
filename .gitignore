@@ -19,3 +19,6 @@ url/
 /.org-id-locations
 /tree-sitter/
 /backups/
+/org-roam.db
+/eln-cache/
+/session.*
