@@ -123,6 +123,29 @@ Custom single file packages are kept in the =lisp/= subdirectory.
   :ensure t
   :hook (compilation-filter . ansi-color-compilation-filter))
 
+(use-package biblio
+  :ensure t)
+
+(use-package citar
+  :ensure t
+  :custom
+  (org-cite-global-bibliography '("~/Documents/library/lib.bib"))
+  (org-cite-insert-processor 'citar)
+  (org-cite-follow-processor 'citar)
+  (org-cite-activate-processor 'citar)
+  (citar-bibliography org-cite-global-bibliography)
+  :bind
+  (("C-c w b o" . citar-open)))
+
+(use-package bibtex
+  :custom
+  (bibtex-dialect 'BibTeX)
+  (bibtex-user-optional-fields
+   '(("file" "Link to a document file." "")))
+  (bibtex-align-at-equal-sign t))
+
+(use-package pdf-tools
+  :ensure t)
 #+end_src
 
 * Projects
