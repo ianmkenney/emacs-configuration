@@ -114,6 +114,12 @@
 (use-package pdf-tools
   :ensure t)
 
+(use-package multiple-cursors
+  :ensure t
+  :bind
+  (("C->" . mc/mark-next-like-this)
+   ("C-<" . mc/mark-previous-like-this)))
+
 (setq project-switch-commands '((project-find-file "Find file" "f")
                                 (project-find-dir "Find dir" "d")
                                 (project-dired "Dired" "D")
